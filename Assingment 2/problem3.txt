@@ -1,0 +1,131 @@
+Part A:
+
+class Stack:
+  def __init__(self):
+    self.items = []
+  
+  def isEmpty(self):
+    return self.items == []
+  
+  def push(self, item):
+    self.items.append(item)
+  
+  def pop(self):
+    return self.items.pop()
+  
+  def peek(self):
+    return self.items[len(self.items)-1]
+  
+  def size(self):
+    return len(self.items)
+  
+def function_to_analyze(my_list):
+  stack = Stack()
+  for item in my_list:
+    stack.push(item)
+  new_list = []
+  while not stack.isEmpty():
+    new_list.append(stack.pop())
+  return new_list
+
+Function: Given my_list, the function iterates over the list. For each item in 
+the list an item is pushed onto the stack object. Then a new empty list is 
+created and while the stack is not empty, each item on the top of the stack is 
+popped onto the new_list. Then new_list is returned. Basically the function 
+reverses the elements in my_list.
+
+The running time of the function is: O(n).
+
+Part B:
+
+class Stack:
+  def __init__(self):
+    self.items = []
+
+  def isEmpty(self):
+    return self.items == []
+    
+  def push(self, item):
+    self.items.insert(0,item)
+      
+  def pop(self):
+    return self.items.pop(0)
+      
+  def peek(self):
+    return self.items[0]
+      
+  def size(self):
+    return len(self.items)
+   
+open_parens = ['{', '[', '(']   
+pairs = {')':'(', ']':'[', '}':'{'}
+
+def function_to_analyze(input_string):
+  stack = Stack()
+  for char in input_string:
+    if char in open_parens:
+      stack.push(char)
+    elif char in pairs:
+      if stack.isEmpty():
+        return False
+      if not stack.peek() == pairs[char]:
+        return False
+      stack.pop()
+  return stack.isEmpty()
+  
+Function: The function takes in input string which is then iterated through. 
+If the character is in the open_parens list, char is pushed onto the top of 
+the stack.If the character is a key in the pairs dictionary, it is then checked
+on. If The stack is empty, the function returns False, and if the top char in 
+the stack object is not the value that the key is set to, the function also
+returns False. If all these tests are passed, the top of the stack is popped 
+off and then the function will return true if the stack is empty.
+
+The running time of the function is: O(n)
+
+Part C:
+
+class Stack:
+  def __init__(self):
+    self.items = []
+  
+  def isEmpty(self):
+    return self.items == []
+  
+  def push(self, item):
+    self.items.append(item)
+  
+  def pop(self):
+    return self.items.pop()
+  
+  def peek(self):
+    return self.items[len(self.items)-1]
+  
+  def size(self):
+    return len(self.items)
+  
+def function_to_analyze(string):
+  stack = Stack()
+  for char in string:
+    stack.push(char)
+  another_stack = Stack()
+  while stack.size() > another_stack.size():
+    another_stack.push(stack.pop())
+  if not stack.size() == another_stack.size():
+    another_stack.pop()
+  while not stack.isEmpty():
+    if not stack.pop() == another_stack.pop():
+      return False
+  return True
+
+Function: The funciton takes in string which is then iterated through and each
+character of the string is pushed onto the stack object. Another_stack object
+is created and, while the size of stack is greater than the size of 
+another_stack, the top of stack is popped and pushed onto another_stack. If the 
+size of stack is not equal ot the size of another_stack, the top element on 
+another_stack is popped. While stack is not empty, and if the element popped 
+from stack is not equal to the element popped from another_stack, the function 
+returns False. If all these tests are passed, the function will then return 
+True.
+
+The running time of the function is: O(n)

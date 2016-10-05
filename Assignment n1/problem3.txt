@@ -1,0 +1,97 @@
+# Problem 3
+# Tells what each function does and tells the best and the worst case scenario for each function
+#
+# Copyright 2013, Jason Kolankowski, Preyanshu Kumar.
+# All rights reserved.
+#
+# Created:		Jason Kolankowski(<kolankow@ualberta.ca>)
+#                       Preyanshu Kumar (<preyansh@ualberta.ca>)
+# Imports
+
+# Functions
+
+# a)
+def partA(myList):
+  if len(myList) < 2:
+    return -1
+  return myList[0] + myList[1]
+
+#partA:Recursive call over the list that gives the value of first 2 elements in the list if n>2 or returning -1 if n<2
+  
+#Best Case: n is less than two giving O(1)
+#Worst Case: n is greater than two causign the recursive calll giving O(2^n)
+
+# b)
+def partB(myList):
+  if len(myList) % 2 == 0:
+    partA(myList) + partA(myList)
+  else:
+    partA(myList)
+
+#partB: If n is divided by 2 and the remainder is 0, then add the value of partA twice, else, do partA.
+
+#Best Case: if the remainder of n is 0 causing it to go into an extra if statement causing O(1)
+#Worst Case: if remainder > 0, causes partA to occur and recursive call, O(2^n)
+
+#c) 
+def partC(myList):
+  max = myList[0]
+  for value in myList:
+    if value > max:
+      max = value
+  print(max)
+  min = myList[0]      
+  for value in myList:
+    if value < min:
+      min = value
+  print(min)  
+  sum = 0
+  for value in myList:
+    sum = sum + value
+  print(sum)
+  
+#partC: finds the max and min of the myList without using the max and min functions, and then adds the um of the elements in myList
+
+#Best Case: Empty List, no max or min returning O(1)
+#Worst Case: myList has multiple elements causing iterations to find min and max with O(n)
+
+#d) 
+def partD(myList):
+  i = 1
+  while i < len(myList):
+    print(myList[i])
+    i = 2*i
+#partD: sets i=1, if i is greater than n, you print the element at i, and sets the value of i to i*2, this continues till i is greater than n
+
+#Best Case: If i>n because it doesnt go into loop O(1)
+#Wrost Caseif i<n because it enters the while loop, BUT we do half the cases as i=2*i O(n/2)
+
+#e) 
+def partE(myList, valueToFind):
+  for i in range(len(myList)):
+    if myList[i] == valueToFind:
+      return i
+  return -1
+  
+#partE: iterates over range of n, and if i equals the valuesToFind it returns the element at i, after it returns -1 
+
+#Best Case: If value to find is the first element in myList O(1)
+#Wrost Case: If value to find is the last element in myList O(n)
+
+#f) 
+def partF(myList):
+  products = []
+  for value1 in myList:
+    for value2 in myList:
+      products.append(value1*value2)
+  sum = 0
+  for product in products:
+    sum = sum + product
+  return sum
+
+partF: Takes the values in myList, multiplies each digit by myList, then takes the sum
+
+#Best Case: List is empty avoiding Long iteration only returning sum 0, constant so O(1)
+#Worst Case: List with multiple items cause two iterations within one another so O(n^2)
+
+  

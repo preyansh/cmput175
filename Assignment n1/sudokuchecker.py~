@@ -1,0 +1,110 @@
+# Sudoko Checker
+# Reads in sample Sudoku file and checks to see is file is a potential solution
+#
+# Copyright 2013, Jason Kolankowski, Preyanshu Kumar.
+# All rights reserved.
+#
+# Created:		Jason Kolankowski(<kolankow@ualberta.ca>)
+#                       Preyanshu Kumar (<preyansh@ualberta.ca>)
+# Imports
+# i.e. from math import sqrt
+
+# Functions
+
+#reads in our file
+
+column_list=[]
+
+def read_file():
+    input_file=input('Enter the input filename: ')
+    try:
+        open_file=open(input_file,'r')
+    except IOError:
+        print('File does not exist!')
+    #reads each line of the file    
+    sudoku_file=open_file.readlines()
+    open_file.close()
+    #returns the file with each line as a list
+    return sudoku_file
+
+#removes anything from the list that we do not want (/n, white spaces, etc.)
+def clean_file(file):
+    clean_list=[]#new empty list where our clean elements will go
+    for row in file:#iterates over the rows in our file
+        clean_row=row.strip()#strips the element to just numbers
+        clean_list.append(clean_row)#appends these elements onto a new list
+    return clean_list#returns the new 'clean' list
+
+def analyze_row(rows):
+    for row in rows:#iterates over the rows in our clean list
+        check_list=[]#new empty list where all numbers will go except for zero
+        new_row_list=list(row)#makes row we are going to iterate over to a list
+        if len(new_row_list)>10:
+            return False#if the length of the row is greater than 9 it will return false and take us out of the program
+        for number in new_row_list:#iterates over the individual numbers in our list
+            number=int(number)#makes teh number into an int value
+            if number in check_list:#if the number is already in the list returns false
+                return False
+            if number > 0:#if number bigger than 0, then we append this onto our new empty list
+                check_list.append(number)
+                #print(check_list)
+    return True #if everything checks our we return true that all lines are good.
+
+def analyze_columns(rows):
+    cl=[]
+    c0=[]
+    c1=[]
+    c2=[]
+    c3=[]
+    c4=[]
+    c5=[]
+    c6=[]
+    c7=[]
+    c8=[]
+    cl=[c0,c1,c2,c3,c4,c5,c6,c7,c8]
+    for row in rows:
+        row=list(row)
+        i=0
+        for d in row:
+            l=cl[i]
+            l.append(d)
+            i += 1
+    #print (cl)
+    for column in cl:
+        #column_string=''.join(column)
+        #print (column_string)
+        column_list.append(column)
+        #print(column_list)
+        new_column_list=[]
+        for digit in column:
+            digit=int(digit)
+            if digit > 0:
+                if digit not in new_column_list:
+                    new_column_list.append(digit)
+                else:
+                    return False
+    return True
+    
+def analyze_boxes(columns):
+    master_list=[[0,1,2],[3,4,5],[6,7,8]]
+    for columns in master_list:
+        c1=[column_list[columns[0]]]
+        c2=[column_list[columns[1]]]
+        c3=[column_list[columns[2]]]
+        columns_set=[c1,c2,c3]
+        for column in columns_set:
+            print (column)
+            
+def main():
+    file=read_file()
+    #print(file)
+    rows_list=clean_file(file)
+    #print(rows_list)
+    rows_check=analyze_row(rows_list)
+    print(rows_check)
+    columns_check=analyze_columns(rows_list)
+    print(columns_check)
+    box_check=analyze_boxes(column_list)
+    
+        
+main()
